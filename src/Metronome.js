@@ -1,4 +1,5 @@
 
+
 import click1 from './click1.wav';
 import click2 from './click2.wav';
 import React, { Component } from 'react';
@@ -22,6 +23,11 @@ class Metronome extends Component {
         this.click1 = new Audio(click1);
         this.click2 = new Audio(click2);
 
+    }
+
+    isPlaying = () =>
+    {
+        return(this.state.playing)
     }
     handleBpmChange = event =>{
         const bpm = event.target.value;
@@ -134,13 +140,7 @@ class Metronome extends Component {
         if(count % beatsPerMeasure === 0)
         {
             this.click2.play();
-            this.setState
-            (
-                {
-                 dotColor1: green,
-                 dotColor2: yellow
-                }
-            )
+ 
        
         
 
@@ -148,13 +148,7 @@ class Metronome extends Component {
         else
         {
             this.click2.play();
-            this.setState
-            (
-                {
-                 dotColor1: yellow,
-                 dotColor2: green
-                }
-            )
+
        
         }
 
@@ -168,13 +162,32 @@ class Metronome extends Component {
         const{playing, bpm , beatsPerMeasure, arrayDots, numberOfDots , count} = this.state;
         const dots = numberOfDots;
         const arrayDot = [];
+        const isplaying = this.state.isPlaying;
+        
         for(var i = 0 ; i < dots ; i++)
         {
             
             arrayDot.push(i);
         }
         const rowDots = arrayDot.map((dot)=>
-        <div class = "dot" id = {dot} ></div>);
+        <div class = "dot" id = {dot}  key = {dot}  > 
+        {
+
+         (()=>{
+
+         
+            if(dot === count)
+            return <div class = "dot" id = {dot}  key = {dot}  style ={{background:green}}> </div>
+
+            if(dot !== count)
+            return <div class = "dot" id = {dot}  key = {dot}  style ={{background:yellow}}> </div>
+            
+
+
+         })()
+
+        }
+        </div>);
     return (
       <div className="metronome">
         <div className="bpm-slider">
